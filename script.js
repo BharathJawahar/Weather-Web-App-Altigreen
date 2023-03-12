@@ -284,7 +284,7 @@ function getDayName(date) {
   return days[day.getDay()];
 }
 
-// function to get uv index status
+// function to get pressure index status
 function measurePresureIndex(pressureIndex) {
   if (pressureIndex <= 1010) {
     pressureText.innerText = "Low";
@@ -332,7 +332,7 @@ function updateVisibiltyStatus(visibility) {
   }
 }
 
-// function to get air quality status
+// function to get wind direction
 function updateWindDegStatus(windDeg) {
   if (windDeg <= 11.25) {
     windDegStatus.innerText = "North";
