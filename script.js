@@ -110,7 +110,6 @@ function getWeatherData(city, unit, hourlyorWeek) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      console.log(data.weather[0].main);
       if (unit === "c") {
         temp.innerText = (data.main.temp - 273.15).toFixed(1);
         feels.innerText =
@@ -152,6 +151,7 @@ function getWeatherData(city, unit, hourlyorWeek) {
       updateVisibiltyStatus(data.visibility);
       windDeg.innerText = data.wind.deg;
       updateWindDegStatus(data.wind.deg);
+      console.log(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`);
       fetch(
         `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`,
         {
@@ -168,8 +168,8 @@ function getWeatherData(city, unit, hourlyorWeek) {
             updateForecast(data.days, unit, "week");
           }
         });
-      sunRise.innerText = uunixToTime(data.sys.sunrise);
-      sunSet.innerText = uunixToTime(data.sys.sunset);
+      sunRise.innerText = unixToTime(data.sys.sunrise);
+      sunSet.innerText = unixToTime(data.sys.sunset);
     })
     .catch((err) => {
       alert("OpenWeatherMap API error : " + err);
@@ -233,6 +233,16 @@ function getIcon(condition) {
     return "https://cdn-icons-png.flaticon.com/512/1585/1585460.png";
   } else if (condition === "Smoke") {
     return "https://cdn-icons-png.flaticon.com/512/7407/7407787.png";
+  } else if (condition === "partly-cloudy-day") {
+    return "https://i.ibb.co/PZQXH8V/27.png";
+  } else if (condition === "partly-cloudy-night") {
+    return "https://i.ibb.co/Kzkk59k/15.png";
+  } else if (condition === "rain") {
+    return "https://i.ibb.co/kBd2NTS/39.png";
+  } else if (condition === "clear-day") {
+    return "https://i.ibb.co/rb4rrJL/26.png";
+  } else if (condition === "clear-night") {
+    return "https://i.ibb.co/1nxNGHL/10.png";
   } else {
     return "https://i.ibb.co/rb4rrJL/26.png";
   }
@@ -251,7 +261,7 @@ function getHour(time) {
 }
 
 // convert time to 12 hour format
-function uunixToTime(time) {
+function unixToTime(time) {
   var date = new Date(time * 1000);
   // Hours part from the timestamp
   var hours = date.getHours();
@@ -264,7 +274,6 @@ function uunixToTime(time) {
   var formattedTime =
     hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
 
-  console.log(formattedTime);
 
   return formattedTime;
 }
